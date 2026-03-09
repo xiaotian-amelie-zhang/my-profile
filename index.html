@@ -846,6 +846,16 @@
       line-height: 1.85;
     }
 
+    /* ─── REDUCED MOTION ─── */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+      .fade-up { opacity: 1 !important; transform: none !important; }
+    }
+
     /* ─── SCROLL ANIMATIONS ─── */
     .fade-up {
       opacity: 0;
@@ -934,13 +944,13 @@
         Sweat-proof mineral SPF50 with a universal skin-perfecting tint and a signature scent. Built for women who move.
       </p>
       <div class="form-wrap">
-        <form class="waitlist-form" id="waitlist" name="waitlist" data-netlify="true" netlify-honeypot="bot-field" method="POST">
+        <form class="waitlist-form" id="waitlist" name="waitlist" data-netlify="true" netlify-honeypot="bot-field" method="POST" action="/success">
           <input type="hidden" name="form-name" value="waitlist" />
           <input type="hidden" name="bot-field" />
-          <input type="email" name="email" placeholder="your@email.com" required />
+          <input type="email" name="email" placeholder="your@email.com" required autocomplete="email" />
           <button type="submit">Notify Me →</button>
         </form>
-        <p class="form-note">First access. No spam. Ever.</p>
+        <p class="form-note">First access. No spam. <a href="/privacy" style="color:inherit;text-decoration:underline;text-underline-offset:3px;opacity:0.7;">Privacy policy.</a></p>
         <p class="success-msg" id="success-hero">You're on the list — we'll be in touch.</p>
       </div>
     </div>
@@ -1142,13 +1152,13 @@
     </div>
     <div class="cta-right fade-up">
       <p>Limited first batch. Waitlist members get early access, founder pricing, and a say in what comes next.</p>
-      <form class="waitlist-form" id="waitlist-2" name="waitlist" data-netlify="true" netlify-honeypot="bot-field" method="POST">
+      <form class="waitlist-form" id="waitlist-2" name="waitlist" data-netlify="true" netlify-honeypot="bot-field" method="POST" action="/success">
         <input type="hidden" name="form-name" value="waitlist" />
         <input type="hidden" name="bot-field" />
-        <input type="email" name="email" placeholder="your@email.com" required />
+        <input type="email" name="email" placeholder="your@email.com" required autocomplete="email" />
         <button type="submit">Join →</button>
       </form>
-      <p class="form-note">No spam. Unsubscribe anytime.</p>
+      <p class="form-note">No spam. <a href="/privacy" style="color:inherit;text-decoration:underline;text-underline-offset:3px;opacity:0.7;">Privacy policy.</a></p>
       <p class="success-msg" id="success-footer">You're on the list — we'll be in touch.</p>
     </div>
   </section>
@@ -1156,7 +1166,10 @@
   <!-- FOOTER -->
   <footer>
     <a href="#" class="logo">VÉLO</a>
-    <p class="footer-center">Active Skin Veil · Est. 2025</p>
+    <div class="footer-center">
+      <p style="margin-bottom:8px;">Active Skin Veil · Est. 2025</p>
+      <a href="/privacy" style="font-size:10px;letter-spacing:0.12em;color:rgba(197,185,167,0.3);text-decoration:none;text-transform:uppercase;transition:color 0.2s;" onmouseover="this.style.color='#b5924a'" onmouseout="this.style.color='rgba(197,185,167,0.3)'">Privacy Policy</a>
+    </div>
     <div>
       <div class="footer-social">
         <a href="https://instagram.com/getvelo" target="_blank" rel="noopener">Instagram</a>

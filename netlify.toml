@@ -27,12 +27,6 @@
   [headers.values]
     Cache-Control = "public, max-age=86400"
 
-# ── Form success redirect ──────────────────────────────────────────────────────
-[[redirects]]
-  from   = "/success"
-  to     = "/?submitted=true"
-  status = 302
-
 # ── www → apex ────────────────────────────────────────────────────────────────
 [[redirects]]
   from   = "https://www.getvelo.com/*"

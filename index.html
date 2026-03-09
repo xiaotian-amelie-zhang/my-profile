@@ -7,136 +7,292 @@
   <meta name="description" content="Sweat-proof mineral SPF50. Universal skin-perfecting tint. A signature scent. Your skin, but better." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --sand:    #f5f0e8;
-      --linen:   #ede7d9;
-      --stone:   #c8bfb0;
-      --olive:   #4a4a3a;
-      --ink:     #1e1e18;
-      --gold:    #b89a6a;
-      --white:   #fdfcfa;
+      --sand:  #f4ede0;
+      --linen: #ece3d2;
+      --stone: #c5b9a7;
+      --olive: #49493a;
+      --ink:   #1a1a14;
+      --gold:  #b5924a;
+      --glow:  #d4a96a;
+      --cream: #fdf8f0;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--sand);
+      background: var(--cream);
       color: var(--ink);
       font-family: 'Inter', sans-serif;
       font-weight: 300;
-      font-size: 15px;
-      line-height: 1.7;
-      min-height: 100vh;
+      overflow-x: hidden;
     }
 
-    /* ── NAV ── */
+    /* ─── NOISE TEXTURE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      opacity: 0.025;
+      pointer-events: none;
+      z-index: 999;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+      background-size: 256px 256px;
+    }
+
+    /* ─── NAV ─── */
     nav {
       position: fixed;
       top: 0; left: 0; right: 0;
       z-index: 100;
-      padding: 24px 48px;
+      padding: 28px 56px;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      background: transparent;
-      transition: background 0.3s;
+      mix-blend-mode: multiply;
+      transition: all 0.4s ease;
     }
-    nav.scrolled { background: rgba(245,240,232,0.92); backdrop-filter: blur(8px); }
+    nav.solid {
+      mix-blend-mode: normal;
+      background: rgba(244,237,224,0.88);
+      backdrop-filter: blur(12px);
+      padding: 20px 56px;
+      border-bottom: 1px solid rgba(197,185,167,0.3);
+    }
 
     .logo {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 400;
-      letter-spacing: 0.18em;
+      font-size: 20px;
+      font-weight: 300;
+      letter-spacing: 0.28em;
       color: var(--ink);
       text-decoration: none;
     }
+
+    .nav-links { display: flex; align-items: center; gap: 40px; }
+
+    .nav-link {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--olive);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-link:hover { color: var(--gold); }
 
     .nav-cta {
-      font-size: 11px;
-      letter-spacing: 0.15em;
+      font-size: 10px;
+      letter-spacing: 0.18em;
       text-transform: uppercase;
-      color: var(--ink);
+      color: var(--cream);
+      background: var(--ink);
+      padding: 10px 22px;
       text-decoration: none;
-      border-bottom: 1px solid var(--ink);
-      padding-bottom: 2px;
-      transition: opacity 0.2s;
+      transition: background 0.25s;
     }
-    .nav-cta:hover { opacity: 0.5; }
+    .nav-cta:hover { background: var(--gold); }
 
-    /* ── HERO ── */
+    /* ─── HERO ─── */
     .hero {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
       align-items: center;
-      text-align: center;
-      padding: 120px 32px 80px;
       position: relative;
       overflow: hidden;
+      background: var(--sand);
     }
 
-    .hero::before {
-      content: '';
+    /* Background gradient orbs */
+    .hero-bg {
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(184,154,106,0.10) 0%, transparent 70%);
       pointer-events: none;
+    }
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+    }
+    .orb-1 {
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, rgba(181,146,74,0.18) 0%, transparent 70%);
+      top: -100px; right: -100px;
+      animation: drift1 12s ease-in-out infinite;
+    }
+    .orb-2 {
+      width: 400px; height: 400px;
+      background: radial-gradient(circle, rgba(212,169,106,0.12) 0%, transparent 70%);
+      bottom: 50px; left: 100px;
+      animation: drift2 16s ease-in-out infinite;
+    }
+    .orb-3 {
+      width: 300px; height: 300px;
+      background: radial-gradient(circle, rgba(244,237,224,0.8) 0%, transparent 70%);
+      top: 30%; right: 35%;
+      animation: drift3 10s ease-in-out infinite;
+    }
+
+    @keyframes drift1 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%      { transform: translate(-40px, 30px) scale(1.08); }
+    }
+    @keyframes drift2 {
+      0%,100% { transform: translate(0,0) scale(1); }
+      50%      { transform: translate(30px,-20px) scale(0.95); }
+    }
+    @keyframes drift3 {
+      0%,100% { transform: translate(0,0); }
+      50%      { transform: translate(20px, 40px); }
+    }
+
+    /* Hero left: text */
+    .hero-text {
+      padding: 120px 56px 80px 72px;
+      position: relative;
+      z-index: 2;
     }
 
     .hero-eyebrow {
+      display: flex;
+      align-items: center;
+      gap: 14px;
       font-size: 10px;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--gold);
-      margin-bottom: 28px;
+      margin-bottom: 32px;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 1px;
+      background: var(--gold);
     }
 
     .hero h1 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(52px, 9vw, 100px);
-      font-weight: 300;
-      line-height: 1.0;
-      letter-spacing: 0.04em;
+      font-size: clamp(64px, 7vw, 110px);
+      font-weight: 200;
+      line-height: 0.95;
+      letter-spacing: -0.01em;
       color: var(--ink);
-      margin-bottom: 8px;
+      margin-bottom: 32px;
     }
-
     .hero h1 em {
       font-style: italic;
       color: var(--gold);
+      display: block;
     }
 
-    .hero-sub {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(18px, 2.5vw, 24px);
+    .hero-desc {
+      font-size: 14px;
       font-weight: 300;
-      font-style: italic;
       color: var(--olive);
-      margin-top: 16px;
+      line-height: 1.9;
+      max-width: 360px;
       margin-bottom: 48px;
-      max-width: 480px;
+      border-left: 2px solid var(--gold);
+      padding-left: 20px;
     }
 
-    /* ── FORM ── */
+    /* Hero right: visual */
+    .hero-visual {
+      height: 100vh;
+      position: relative;
+      z-index: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .product-orb {
+      position: relative;
+      width: 380px;
+      height: 380px;
+    }
+    .product-orb-inner {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle at 38% 32%,
+        rgba(253,248,240,0.95) 0%,
+        rgba(212,169,106,0.55) 28%,
+        rgba(181,146,74,0.35) 55%,
+        rgba(74,74,58,0.12) 80%,
+        transparent 100%
+      );
+      box-shadow:
+        0 0 100px rgba(181,146,74,0.25),
+        0 0 200px rgba(181,146,74,0.08),
+        inset 0 0 60px rgba(253,248,240,0.6);
+      animation: breathe 5s ease-in-out infinite;
+    }
+    .product-orb-ring {
+      position: absolute;
+      inset: -24px;
+      border-radius: 50%;
+      border: 1px solid rgba(181,146,74,0.2);
+      animation: spin-slow 20s linear infinite;
+    }
+    .product-orb-ring::before {
+      content: '';
+      position: absolute;
+      top: -3px; left: 50%;
+      transform: translateX(-50%);
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+    }
+    .product-orb-ring-2 {
+      position: absolute;
+      inset: -48px;
+      border-radius: 50%;
+      border: 1px solid rgba(181,146,74,0.08);
+      animation: spin-slow 35s linear infinite reverse;
+    }
+
+    @keyframes breathe {
+      0%,100% { transform: scale(1);    box-shadow: 0 0 100px rgba(181,146,74,0.25), 0 0 200px rgba(181,146,74,0.08), inset 0 0 60px rgba(253,248,240,0.6); }
+      50%      { transform: scale(1.04); box-shadow: 0 0 130px rgba(181,146,74,0.35), 0 0 260px rgba(181,146,74,0.12), inset 0 0 80px rgba(253,248,240,0.7); }
+    }
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to   { transform: rotate(360deg); }
+    }
+
+    .orb-label {
+      position: absolute;
+      bottom: -56px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 13px;
+      font-style: italic;
+      color: var(--stone);
+      white-space: nowrap;
+      letter-spacing: 0.06em;
+    }
+
+    /* ─── EMAIL FORM ─── */
+    .form-wrap {
+      max-width: 380px;
+    }
     .waitlist-form {
       display: flex;
-      gap: 0;
-      max-width: 420px;
-      width: 100%;
-      margin: 0 auto;
-      border: 1px solid var(--stone);
-      background: var(--white);
+      border-bottom: 1.5px solid var(--ink);
+      background: transparent;
+      margin-bottom: 12px;
     }
-
     .waitlist-form input[type="email"] {
       flex: 1;
-      padding: 14px 20px;
+      padding: 12px 0;
       border: none;
       background: transparent;
       font-family: 'Inter', sans-serif;
@@ -146,195 +302,442 @@
       outline: none;
     }
     .waitlist-form input::placeholder { color: var(--stone); }
-
     .waitlist-form button {
-      padding: 14px 24px;
-      background: var(--ink);
-      color: var(--sand);
+      padding: 12px 0 12px 20px;
       border: none;
+      background: transparent;
       font-family: 'Inter', sans-serif;
       font-size: 10px;
       font-weight: 500;
       letter-spacing: 0.2em;
       text-transform: uppercase;
+      color: var(--ink);
       cursor: pointer;
-      transition: background 0.2s;
+      transition: color 0.2s;
       white-space: nowrap;
     }
-    .waitlist-form button:hover { background: var(--gold); }
-
+    .waitlist-form button:hover { color: var(--gold); }
     .form-note {
-      margin-top: 14px;
       font-size: 11px;
-      letter-spacing: 0.05em;
       color: var(--stone);
+      letter-spacing: 0.04em;
     }
-
     .success-msg {
       display: none;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 18px;
+      font-size: 17px;
       font-style: italic;
       color: var(--gold);
-      margin-top: 16px;
+      padding: 12px 0;
     }
 
-    /* ── DIVIDER ── */
-    .divider {
-      width: 1px;
-      height: 80px;
-      background: var(--stone);
-      margin: 0 auto;
+    /* ─── TICKER ─── */
+    .ticker {
+      background: var(--ink);
+      padding: 14px 0;
+      overflow: hidden;
+      white-space: nowrap;
+    }
+    .ticker-inner {
+      display: inline-block;
+      animation: ticker 22s linear infinite;
+    }
+    .ticker-inner span {
+      font-size: 10px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--stone);
+      padding: 0 36px;
+    }
+    .ticker-inner span.accent { color: var(--gold); }
+    @keyframes ticker {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
     }
 
-    /* ── PILLARS ── */
-    .pillars {
-      padding: 100px 48px;
+    /* ─── PRODUCT SECTION ─── */
+    .product-section {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 85vh;
       background: var(--linen);
     }
 
-    .pillars-inner {
-      max-width: 960px;
-      margin: 0 auto;
+    .product-img-side {
+      position: relative;
+      overflow: hidden;
+      background: var(--sand);
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
 
-    .section-label {
+    /* Abstract bottle/mist visualization */
+    .bottle-wrap {
+      position: relative;
+      width: 200px;
+      height: 340px;
+    }
+    .bottle-body {
+      position: absolute;
+      bottom: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 260px;
+      background: linear-gradient(160deg,
+        rgba(253,248,240,0.9) 0%,
+        rgba(212,169,106,0.4) 40%,
+        rgba(181,146,74,0.25) 100%
+      );
+      border-radius: 12px 12px 18px 18px;
+      border: 1px solid rgba(181,146,74,0.3);
+      box-shadow:
+        inset 4px 0 20px rgba(253,248,240,0.6),
+        inset -2px 0 10px rgba(181,146,74,0.1),
+        8px 20px 60px rgba(181,146,74,0.15);
+    }
+    .bottle-cap {
+      position: absolute;
+      bottom: 256px; left: 50%;
+      transform: translateX(-50%);
+      width: 40px;
+      height: 52px;
+      background: linear-gradient(160deg, var(--ink) 0%, var(--olive) 100%);
+      border-radius: 4px 4px 0 0;
+    }
+    .bottle-label {
+      position: absolute;
+      bottom: 80px; left: 50%;
+      transform: translateX(-50%);
+      width: 70px;
+      text-align: center;
+    }
+    .bottle-label-text {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 11px;
+      font-weight: 300;
+      letter-spacing: 0.22em;
+      color: var(--ink);
+    }
+    .bottle-label-sub {
+      font-size: 7px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--olive);
+      margin-top: 4px;
+    }
+    /* Mist spray particles */
+    .mist {
+      position: absolute;
+      top: 20px; left: 50%;
+      transform: translateX(-50%);
+    }
+    .mist-dot {
+      position: absolute;
+      border-radius: 50%;
+      background: rgba(181,146,74,0.3);
+      filter: blur(2px);
+      animation: mist-float 3s ease-out infinite;
+    }
+    .mist-dot:nth-child(1) { width:8px;height:8px; top:0;  left:20px;  animation-delay:0s;   animation-duration:2.8s; }
+    .mist-dot:nth-child(2) { width:5px;height:5px; top:10px;left:35px; animation-delay:0.4s; animation-duration:3.2s; }
+    .mist-dot:nth-child(3) { width:6px;height:6px; top:5px; left:5px;  animation-delay:0.8s; animation-duration:2.5s; }
+    .mist-dot:nth-child(4) { width:4px;height:4px; top:18px;left:50px; animation-delay:1.2s; animation-duration:3.6s; }
+    .mist-dot:nth-child(5) { width:7px;height:7px; top:2px; left:-5px; animation-delay:0.2s; animation-duration:3.0s; }
+    @keyframes mist-float {
+      0%   { transform: translate(0,0) scale(1);   opacity:0.8; }
+      100% { transform: translate(var(--dx,10px), -60px) scale(0.3); opacity:0; }
+    }
+    .mist-dot:nth-child(1) { --dx: 15px; }
+    .mist-dot:nth-child(2) { --dx: 22px; }
+    .mist-dot:nth-child(3) { --dx: -8px; }
+    .mist-dot:nth-child(4) { --dx: 30px; }
+    .mist-dot:nth-child(5) { --dx: -15px; }
+
+    .product-text-side {
+      padding: 80px 64px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .section-tag {
       font-size: 10px;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       color: var(--gold);
-      text-align: center;
-      margin-bottom: 56px;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .section-tag::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--gold);
+    }
+    .product-text-side h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 58px);
+      font-weight: 200;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: 28px;
+    }
+    .product-text-side h2 em { font-style: italic; color: var(--gold); }
+    .product-text-side p {
+      font-size: 14px;
+      line-height: 1.9;
+      color: var(--olive);
+      max-width: 380px;
+      margin-bottom: 48px;
+    }
+    .feature-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+    .feature-list li {
+      font-size: 13px;
+      color: var(--olive);
+      display: flex;
+      align-items: flex-start;
+      gap: 14px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(197,185,167,0.3);
+    }
+    .feature-list li:last-child { border-bottom: none; }
+    .feature-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 200;
+      color: var(--stone);
+      line-height: 1;
+      flex-shrink: 0;
+      width: 28px;
+    }
+    .feature-text strong {
+      display: block;
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--ink);
+      letter-spacing: 0.04em;
+      margin-bottom: 2px;
     }
 
+    /* ─── MARQUEE QUOTE ─── */
+    .marquee-quote {
+      padding: 64px 0;
+      background: var(--cream);
+      overflow: hidden;
+    }
+    .marquee-inner {
+      display: inline-block;
+      animation: ticker 28s linear infinite;
+    }
+    .marquee-inner span {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 42px;
+      font-weight: 200;
+      font-style: italic;
+      color: var(--linen);
+      padding: 0 48px;
+      white-space: nowrap;
+    }
+    .marquee-inner span.dark { color: var(--ink); }
+
+    /* ─── PILLARS ─── */
+    .pillars {
+      background: var(--ink);
+      padding: 120px 72px;
+    }
+    .pillars-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 80px;
+    }
+    .pillars-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(42px, 5vw, 72px);
+      font-weight: 200;
+      color: var(--sand);
+      line-height: 1.0;
+    }
+    .pillars-header h2 em { font-style: italic; color: var(--gold); }
+    .pillars-header p {
+      font-size: 13px;
+      color: var(--stone);
+      max-width: 280px;
+      line-height: 1.8;
+      text-align: right;
+    }
     .pillars-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 48px;
+      gap: 1px;
+      background: rgba(197,185,167,0.1);
     }
-
     .pillar {
-      text-align: center;
+      padding: 48px 40px;
+      background: var(--ink);
+      transition: background 0.3s;
+      cursor: default;
     }
-
-    .pillar-number {
+    .pillar:hover { background: rgba(181,146,74,0.06); }
+    .pillar-num {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 48px;
-      font-weight: 300;
-      color: var(--stone);
+      font-size: 64px;
+      font-weight: 200;
+      color: rgba(197,185,167,0.12);
       line-height: 1;
-      margin-bottom: 16px;
+      margin-bottom: 24px;
     }
-
     .pillar h3 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 22px;
-      font-weight: 400;
-      letter-spacing: 0.06em;
-      color: var(--ink);
-      margin-bottom: 12px;
+      font-size: 28px;
+      font-weight: 300;
+      color: var(--sand);
+      letter-spacing: 0.04em;
+      margin-bottom: 16px;
     }
-
     .pillar p {
       font-size: 13px;
-      font-weight: 300;
-      color: var(--olive);
-      line-height: 1.8;
+      color: var(--stone);
+      line-height: 1.85;
+    }
+    .pillar-accent {
+      display: inline-block;
+      margin-top: 24px;
+      font-size: 10px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
     }
 
-    /* ── MANIFESTO ── */
+    /* ─── MANIFESTO ─── */
     .manifesto {
-      padding: 120px 32px;
-      text-align: center;
-      max-width: 700px;
-      margin: 0 auto;
+      padding: 140px 72px;
+      background: var(--sand);
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 80px;
+      align-items: center;
     }
-
-    .manifesto blockquote {
+    .manifesto-left {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(24px, 4vw, 38px);
+      font-size: 80px;
+      font-weight: 200;
+      font-style: italic;
+      color: rgba(181,146,74,0.15);
+      line-height: 0.9;
+      user-select: none;
+    }
+    .manifesto-right blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(22px, 3vw, 36px);
       font-weight: 300;
       font-style: italic;
-      line-height: 1.5;
+      line-height: 1.55;
       color: var(--ink);
+      margin-bottom: 32px;
     }
-
-    .manifesto cite {
-      display: block;
-      margin-top: 28px;
-      font-size: 11px;
-      letter-spacing: 0.2em;
+    .manifesto-right cite {
+      font-size: 10px;
+      letter-spacing: 0.25em;
       text-transform: uppercase;
       font-style: normal;
       color: var(--stone);
     }
 
-    /* ── SECOND WAITLIST ── */
+    /* ─── SECOND CTA ─── */
     .second-cta {
-      background: var(--ink);
-      padding: 100px 32px;
-      text-align: center;
+      background: var(--gold);
+      padding: 100px 72px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 80px;
     }
-
     .second-cta h2 {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(32px, 5vw, 52px);
-      font-weight: 300;
-      color: var(--sand);
-      letter-spacing: 0.04em;
-      margin-bottom: 12px;
-    }
-
-    .second-cta p {
-      font-size: 13px;
-      color: var(--stone);
-      margin-bottom: 40px;
-    }
-
-    .second-cta .waitlist-form {
-      border-color: rgba(200,191,176,0.3);
-      background: transparent;
-    }
-    .second-cta .waitlist-form input[type="email"] {
-      color: var(--sand);
-    }
-    .second-cta .waitlist-form input::placeholder { color: rgba(200,191,176,0.5); }
-    .second-cta .waitlist-form button {
-      background: var(--gold);
+      font-size: clamp(48px, 6vw, 88px);
+      font-weight: 200;
       color: var(--ink);
+      line-height: 0.95;
     }
-    .second-cta .waitlist-form button:hover { background: var(--sand); }
-    .second-cta .form-note { color: rgba(200,191,176,0.5); }
+    .second-cta h2 em { font-style: italic; }
+    .cta-right p {
+      font-size: 14px;
+      color: rgba(26,26,20,0.7);
+      line-height: 1.8;
+      margin-bottom: 32px;
+    }
+    .second-cta .waitlist-form {
+      border-bottom-color: var(--ink);
+    }
+    .second-cta .waitlist-form input[type="email"] { color: var(--ink); }
+    .second-cta .waitlist-form input::placeholder { color: rgba(26,26,20,0.4); }
+    .second-cta .waitlist-form button { color: var(--ink); }
+    .second-cta .form-note { color: rgba(26,26,20,0.5); }
 
-    /* ── FOOTER ── */
+    /* ─── FOOTER ─── */
     footer {
       background: var(--ink);
-      border-top: 1px solid rgba(200,191,176,0.1);
-      padding: 32px 48px;
-      display: flex;
-      justify-content: space-between;
+      padding: 48px 72px;
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
       align-items: center;
     }
-
     footer .logo { color: var(--stone); font-size: 18px; }
-
-    footer p {
+    .footer-center {
+      text-align: center;
+      font-size: 10px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(197,185,167,0.3);
+    }
+    .footer-right {
+      text-align: right;
       font-size: 11px;
+      color: rgba(197,185,167,0.3);
       letter-spacing: 0.05em;
-      color: rgba(200,191,176,0.4);
     }
 
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      nav { padding: 20px 24px; }
+    /* ─── SCROLL ANIMATIONS ─── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(32px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
 
-      .pillars { padding: 72px 24px; }
-      .pillars-grid { grid-template-columns: 1fr; gap: 48px; }
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      nav { padding: 20px 28px; }
+      nav.solid { padding: 16px 28px; }
+      .nav-links .nav-link { display: none; }
 
-      footer { flex-direction: column; gap: 12px; text-align: center; }
+      .hero { grid-template-columns: 1fr; }
+      .hero-text { padding: 120px 28px 60px; }
+      .hero-visual { height: 50vh; }
+      .product-orb { width: 240px; height: 240px; }
 
-      .waitlist-form { flex-direction: column; }
-      .waitlist-form button { padding: 14px; }
+      .product-section { grid-template-columns: 1fr; }
+      .product-img-side { height: 50vh; }
+      .product-text-side { padding: 56px 28px; }
+
+      .pillars { padding: 80px 28px; }
+      .pillars-header { flex-direction: column; align-items: flex-start; gap: 20px; }
+      .pillars-header p { text-align: left; }
+      .pillars-grid { grid-template-columns: 1fr; }
+
+      .manifesto { grid-template-columns: 1fr; padding: 80px 28px; gap: 32px; }
+      .manifesto-left { font-size: 48px; }
+
+      .second-cta { grid-template-columns: 1fr; padding: 72px 28px; gap: 40px; }
+
+      footer { grid-template-columns: 1fr; gap: 16px; padding: 40px 28px; text-align: center; }
+      footer .logo { text-align: center; }
+      .footer-right { text-align: center; }
     }
   </style>
 </head>
@@ -343,92 +746,242 @@
   <!-- NAV -->
   <nav id="nav">
     <a href="#" class="logo">VÉLO</a>
-    <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+    <div class="nav-links">
+      <a href="#product" class="nav-link">The Product</a>
+      <a href="#story" class="nav-link">Our Story</a>
+      <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+    </div>
   </nav>
 
   <!-- HERO -->
   <section class="hero">
-    <p class="hero-eyebrow">Active Skin Veil · Launching 2025</p>
-    <h1>Your skin,<br /><em>protected.</em></h1>
-    <p class="hero-sub">Sweat-proof mineral SPF50 with a universal skin-perfecting tint and a scent that stays with you.</p>
+    <div class="hero-bg">
+      <div class="orb orb-1"></div>
+      <div class="orb orb-2"></div>
+      <div class="orb orb-3"></div>
+    </div>
 
-    <form class="waitlist-form" id="waitlist" name="waitlist" data-netlify="true" netlify-honeypot="bot-field" method="POST">
-      <input type="hidden" name="form-name" value="waitlist" />
-      <input type="hidden" name="bot-field" />
-      <input type="email" name="email" placeholder="your@email.com" required />
-      <button type="submit">Notify Me</button>
-    </form>
-    <p class="form-note">First access. No spam. Ever.</p>
-    <p class="success-msg" id="success-hero">You're on the list. We'll be in touch.</p>
+    <div class="hero-text">
+      <p class="hero-eyebrow">Active Skin Veil · Launching 2025</p>
+      <h1>
+        Your skin,
+        <em>protected.</em>
+      </h1>
+      <p class="hero-desc">
+        Sweat-proof mineral SPF50 with a universal skin-perfecting tint and a signature scent. Built for women who move.
+      </p>
+      <div class="form-wrap">
+        <form class="waitlist-form" id="waitlist" name="waitlist" data-netlify="true" netlify-honeypot="bot-field" method="POST">
+          <input type="hidden" name="form-name" value="waitlist" />
+          <input type="hidden" name="bot-field" />
+          <input type="email" name="email" placeholder="your@email.com" required />
+          <button type="submit">Notify Me →</button>
+        </form>
+        <p class="form-note">First access. No spam. Ever.</p>
+        <p class="success-msg" id="success-hero">You're on the list — we'll be in touch.</p>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <div class="product-orb">
+        <div class="product-orb-ring-2"></div>
+        <div class="product-orb-ring"></div>
+        <div class="product-orb-inner"></div>
+        <p class="orb-label">SPF50 Active Skin Veil Mist</p>
+      </div>
+    </div>
   </section>
 
-  <div class="divider"></div>
+  <!-- TICKER -->
+  <div class="ticker" aria-hidden="true">
+    <div class="ticker-inner">
+      <span class="accent">VÉLO</span>
+      <span>Mineral SPF50</span>
+      <span class="accent">·</span>
+      <span>Universal Tint</span>
+      <span class="accent">·</span>
+      <span>Signature Scent</span>
+      <span class="accent">·</span>
+      <span>Sweat-Proof</span>
+      <span class="accent">·</span>
+      <span>Reef-Safe Zinc</span>
+      <span class="accent">·</span>
+      <span>Launching 2025</span>
+      <span class="accent">·</span>
+      <span class="accent">VÉLO</span>
+      <span>Mineral SPF50</span>
+      <span class="accent">·</span>
+      <span>Universal Tint</span>
+      <span class="accent">·</span>
+      <span>Signature Scent</span>
+      <span class="accent">·</span>
+      <span>Sweat-Proof</span>
+      <span class="accent">·</span>
+      <span>Reef-Safe Zinc</span>
+      <span class="accent">·</span>
+      <span>Launching 2025</span>
+      <span class="accent">·</span>
+    </div>
+  </div>
+
+  <!-- PRODUCT SECTION -->
+  <section class="product-section" id="product">
+    <div class="product-img-side">
+      <!-- Abstract product visualization -->
+      <div class="bottle-wrap">
+        <div class="mist">
+          <div class="mist-dot"></div>
+          <div class="mist-dot"></div>
+          <div class="mist-dot"></div>
+          <div class="mist-dot"></div>
+          <div class="mist-dot"></div>
+        </div>
+        <div class="bottle-cap"></div>
+        <div class="bottle-body">
+          <div class="bottle-label">
+            <div class="bottle-label-text">VÉLO</div>
+            <div class="bottle-label-sub">Active Skin Veil</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="product-text-side fade-up">
+      <p class="section-tag">The Formula</p>
+      <h2>
+        Not sunscreen.<br />
+        Not makeup.<br />
+        <em>Something better.</em>
+      </h2>
+      <p>
+        VÉLO is the product we couldn't find — so we made it. One mist that protects your skin, perfects your tone, and smells like you actually want to wear it. Every day.
+      </p>
+      <ul class="feature-list">
+        <li>
+          <span class="feature-num">01</span>
+          <div class="feature-text">
+            <strong>Mineral SPF50</strong>
+            Non-nano zinc oxide. Sweat-activated adhesion. Doesn't sting eyes.
+          </div>
+        </li>
+        <li>
+          <span class="feature-num">02</span>
+          <div class="feature-text">
+            <strong>Universal Adaptive Tint</strong>
+            One shade. Every skin tone. Blurs, evens, and illuminates — not covers.
+          </div>
+        </li>
+        <li>
+          <span class="feature-num">03</span>
+          <div class="feature-text">
+            <strong>Signature Scent</strong>
+            Not sunscreen. Not perfume. Clean, airy, and unmistakably VÉLO.
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- MARQUEE QUOTE -->
+  <div class="marquee-quote" aria-hidden="true">
+    <div class="marquee-inner">
+      <span class="dark">Your skin, but better.</span>
+      <span>·</span>
+      <span class="dark">Your run, uninterrupted.</span>
+      <span>·</span>
+      <span class="dark">Your skin, but better.</span>
+      <span>·</span>
+      <span class="dark">Your run, uninterrupted.</span>
+      <span>·</span>
+      <span class="dark">Your skin, but better.</span>
+      <span>·</span>
+      <span class="dark">Your run, uninterrupted.</span>
+      <span>·</span>
+    </div>
+  </div>
 
   <!-- PILLARS -->
-  <section class="pillars">
-    <div class="pillars-inner">
-      <p class="section-label">What VÉLO does</p>
-      <div class="pillars-grid">
-
-        <div class="pillar">
-          <div class="pillar-number">01</div>
-          <h3>Shield</h3>
-          <p>Zinc-based mineral SPF50 that doesn't budge through sweat, heat, or effort. Built for the 6am run and the 6pm rooftop.</p>
-        </div>
-
-        <div class="pillar">
-          <div class="pillar-number">02</div>
-          <h3>Veil</h3>
-          <p>A universal skin-adaptive tint that evens, blurs, and illuminates. Not makeup. Not bare skin. Something better.</p>
-        </div>
-
-        <div class="pillar">
-          <div class="pillar-number">03</div>
-          <h3>Scent</h3>
-          <p>A signature clean fragrance — not sunscreen, not perfume. The smell of discipline, effort, and showing up.</p>
-        </div>
-
+  <section class="pillars" id="story">
+    <div class="pillars-header fade-up">
+      <h2>Why we<br /><em>built this.</em></h2>
+      <p>Every run ends with sunscreen in your eyes, makeup on your collar, and the faint smell of a 1994 beach vacation. We fixed all three.</p>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar fade-up">
+        <div class="pillar-num">01</div>
+        <h3>Shield</h3>
+        <p>Zinc-based mineral SPF50 that doesn't budge through sweat, heat, or effort. Built for the 6am run and the 6pm rooftop — because your skin doesn't clock out either.</p>
+        <span class="pillar-accent">SPF50 · Broad Spectrum</span>
+      </div>
+      <div class="pillar fade-up">
+        <div class="pillar-num">02</div>
+        <h3>Veil</h3>
+        <p>A universal skin-adaptive tint that evens, blurs, and illuminates in one. Not makeup. Not bare skin. The thing in between that makes people ask what you're doing differently.</p>
+        <span class="pillar-accent">Universal Tint · One SKU</span>
+      </div>
+      <div class="pillar fade-up">
+        <div class="pillar-num">03</div>
+        <h3>Scent</h3>
+        <p>A signature clean fragrance — not coconut, not chemicals. The smell of discipline, effort, and showing up. White musk, bergamot, cedar. The scent of a woman who has things to do.</p>
+        <span class="pillar-accent">Clean Fragrance · Signature</span>
       </div>
     </div>
   </section>
 
   <!-- MANIFESTO -->
   <section class="manifesto">
-    <blockquote>
-      "We made it for the woman who trains hard, lives well, and refuses to choose between protection and looking like herself."
-    </blockquote>
-    <cite>— The VÉLO Founders</cite>
+    <div class="manifesto-left" aria-hidden="true">"</div>
+    <div class="manifesto-right fade-up">
+      <blockquote>
+        "We made it for the woman who trains hard, lives well, and refuses to choose between protection and looking like herself."
+      </blockquote>
+      <cite>— The VÉLO Founders</cite>
+    </div>
   </section>
 
   <!-- SECOND CTA -->
-  <section class="second-cta">
-    <h2>Be first.</h2>
-    <p>Limited first batch. Waitlist members get early access and founder pricing.</p>
-
-    <form class="waitlist-form" id="waitlist-2" name="waitlist" data-netlify="true" netlify-honeypot="bot-field" method="POST">
-      <input type="hidden" name="form-name" value="waitlist" />
-      <input type="hidden" name="bot-field" />
-      <input type="email" name="email" placeholder="your@email.com" required />
-      <button type="submit">Join Waitlist</button>
-    </form>
-    <p class="form-note">No spam. Unsubscribe anytime.</p>
-    <p class="success-msg" id="success-footer">You're on the list. We'll be in touch.</p>
+  <section class="second-cta" id="waitlist">
+    <div class="fade-up">
+      <h2>Be<br /><em>first.</em></h2>
+    </div>
+    <div class="cta-right fade-up">
+      <p>Limited first batch. Waitlist members get early access, founder pricing, and a say in what comes next.</p>
+      <form class="waitlist-form" id="waitlist-2" name="waitlist" data-netlify="true" netlify-honeypot="bot-field" method="POST">
+        <input type="hidden" name="form-name" value="waitlist" />
+        <input type="hidden" name="bot-field" />
+        <input type="email" name="email" placeholder="your@email.com" required />
+        <button type="submit">Join →</button>
+      </form>
+      <p class="form-note">No spam. Unsubscribe anytime.</p>
+      <p class="success-msg" id="success-footer">You're on the list — we'll be in touch.</p>
+    </div>
   </section>
 
   <!-- FOOTER -->
   <footer>
     <a href="#" class="logo">VÉLO</a>
-    <p>© 2025 VÉLO. All rights reserved.</p>
+    <p class="footer-center">Active Skin Veil · Est. 2025</p>
+    <p class="footer-right">© 2025 VÉLO. All rights reserved.</p>
   </footer>
 
   <script>
-    // Nav scroll effect
+    // Nav scroll
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
+      nav.classList.toggle('solid', window.scrollY > 60);
     });
 
-    // Netlify Forms: show success message after submission
+    // Scroll animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((e, i) => {
+        if (e.isIntersecting) {
+          setTimeout(() => e.target.classList.add('visible'), i * 120);
+        }
+      });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Netlify form success
     const params = new URLSearchParams(window.location.search);
     if (params.get('submitted') === 'true') {
       document.querySelectorAll('.waitlist-form').forEach(f => f.style.display = 'none');

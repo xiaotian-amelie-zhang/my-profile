@@ -1,0 +1,65 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="bg" cx="75%" cy="30%" r="70%">
+      <stop offset="0%"   stop-color="#e8dcc8"/>
+      <stop offset="100%" stop-color="#f4ede0"/>
+    </radialGradient>
+    <radialGradient id="orb" cx="50%" cy="40%" r="50%">
+      <stop offset="0%"   stop-color="#d4a96a" stop-opacity="0.28"/>
+      <stop offset="100%" stop-color="#d4a96a" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="orb2" cx="50%" cy="50%" r="50%">
+      <stop offset="0%"   stop-color="#b5924a" stop-opacity="0.14"/>
+      <stop offset="100%" stop-color="#b5924a" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Ambient orbs -->
+  <ellipse cx="960" cy="180" rx="380" ry="340" fill="url(#orb)"/>
+  <ellipse cx="200" cy="480" rx="260" ry="220" fill="url(#orb2)"/>
+
+  <!-- Left accent line -->
+  <rect x="80" y="220" width="2" height="190" fill="#b5924a" opacity="0.6"/>
+
+  <!-- Eyebrow -->
+  <rect x="96" y="214" width="28" height="1" fill="#b5924a"/>
+  <text x="134" y="221" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="400" letter-spacing="5" fill="#b5924a" text-rendering="geometricPrecision">ACTIVE SKIN VEIL  ·  LAUNCHING 2025</text>
+
+  <!-- Wordmark -->
+  <text x="80" y="346" font-family="Georgia,'Times New Roman',serif" font-size="160" font-weight="300" fill="#1a1a14" letter-spacing="-2" text-rendering="geometricPrecision">VÉLO</text>
+
+  <!-- Tagline -->
+  <text x="96" y="410" font-family="Georgia,'Times New Roman',serif" font-size="26" font-style="italic" font-weight="300" fill="#49493a" text-rendering="geometricPrecision">Your skin, but better.</text>
+
+  <!-- Three pillars -->
+  <text x="96"  y="480" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="400" letter-spacing="4" fill="#b5924a" text-rendering="geometricPrecision">SPF50 MINERAL</text>
+  <text x="96"  y="498" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="300" letter-spacing="2" fill="#49493a" text-rendering="geometricPrecision">Zinc Oxide · Sweat-Proof</text>
+
+  <text x="350" y="480" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="400" letter-spacing="4" fill="#b5924a" text-rendering="geometricPrecision">UNIVERSAL TINT</text>
+  <text x="350" y="498" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="300" letter-spacing="2" fill="#49493a" text-rendering="geometricPrecision">One Shade · Every Skin Tone</text>
+
+  <text x="610" y="480" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="400" letter-spacing="4" fill="#b5924a" text-rendering="geometricPrecision">SIGNATURE SCENT</text>
+  <text x="610" y="498" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="11" font-weight="300" letter-spacing="2" fill="#49493a" text-rendering="geometricPrecision">White Musk · Bergamot · Cedar</text>
+
+  <!-- Separator lines above pillars -->
+  <rect x="96"  y="466" width="220" height="1" fill="#c5b9a7" opacity="0.5"/>
+  <rect x="350" y="466" width="220" height="1" fill="#c5b9a7" opacity="0.5"/>
+  <rect x="610" y="466" width="220" height="1" fill="#c5b9a7" opacity="0.5"/>
+
+  <!-- Right: product orb visual -->
+  <circle cx="980" cy="315" r="180" fill="none" stroke="#b5924a" stroke-width="0.5" opacity="0.3"/>
+  <circle cx="980" cy="315" r="148" fill="none" stroke="#b5924a" stroke-width="0.5" opacity="0.15"/>
+  <radialGradient id="sphere" cx="40%" cy="35%" r="55%">
+    <stop offset="0%"   stop-color="#fdf8f0" stop-opacity="0.95"/>
+    <stop offset="30%"  stop-color="#d4a96a" stop-opacity="0.55"/>
+    <stop offset="65%"  stop-color="#b5924a" stop-opacity="0.30"/>
+    <stop offset="100%" stop-color="#49493a" stop-opacity="0.08"/>
+  </radialGradient>
+  <circle cx="980" cy="315" r="148" fill="url(#sphere)"/>
+
+  <!-- URL -->
+  <text x="80" y="565" font-family="'Helvetica Neue',Helvetica,Arial,sans-serif" font-size="13" font-weight="300" letter-spacing="3" fill="#c5b9a7" text-rendering="geometricPrecision">GETVELO.COM</text>
+</svg>

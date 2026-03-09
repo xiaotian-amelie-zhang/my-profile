@@ -4,7 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VÉLO — Active Skin Veil</title>
-  <meta name="description" content="Sweat-proof mineral SPF50. Universal skin-perfecting tint. A signature scent. Your skin, but better." />
+  <meta name="description" content="Sweat-proof mineral SPF50. Universal skin-perfecting tint. A signature scent. Built for women who move." />
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='8' fill='%231a1a14'/><text x='32' y='46' font-family='Georgia,serif' font-size='36' font-weight='300' fill='%23b5924a' text-anchor='middle'>V</text></svg>" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='8' fill='%231a1a14'/><text x='32' y='46' font-family='Georgia,serif' font-size='36' font-weight='300' fill='%23b5924a' text-anchor='middle'>V</text></svg>" />
+
+  <!-- Open Graph -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://getvelo.com/" />
+  <meta property="og:title"       content="VÉLO — Active Skin Veil" />
+  <meta property="og:description" content="Sweat-proof mineral SPF50. Universal skin-perfecting tint. A signature scent. Built for women who move." />
+  <meta property="og:image"       content="https://getvelo.com/og-image.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta property="og:site_name"   content="VÉLO" />
+  <meta property="og:locale"      content="en_US" />
+
+  <!-- Twitter / X -->
+  <meta name="twitter:card"        content="summary_large_image" />
+  <meta name="twitter:site"        content="@getvelo" />
+  <meta name="twitter:title"       content="VÉLO — Active Skin Veil" />
+  <meta name="twitter:description" content="Sweat-proof mineral SPF50. Universal skin-perfecting tint. A signature scent. Built for women who move." />
+  <meta name="twitter:image"       content="https://getvelo.com/og-image.png" />
+
+  <!-- Theme -->
+  <meta name="theme-color" content="#1a1a14" />
+  <meta name="color-scheme" content="light" />
+
+  <!-- Plausible Analytics (set your domain in Plausible dashboard) -->
+  <script defer data-domain="getvelo.com" src="https://plausible.io/js/script.js"></script>
+
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
@@ -698,6 +728,22 @@
       color: rgba(197,185,167,0.3);
       letter-spacing: 0.05em;
     }
+    .footer-social {
+      display: flex;
+      justify-content: flex-end;
+      gap: 24px;
+      margin-bottom: 10px;
+    }
+    .footer-social a {
+      font-size: 10px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--stone);
+      text-decoration: none;
+      transition: color 0.2s;
+      opacity: 0.5;
+    }
+    .footer-social a:hover { color: var(--gold); opacity: 1; }
 
     /* ─── SCROLL ANIMATIONS ─── */
     .fade-up {
@@ -961,27 +1007,64 @@
   <footer>
     <a href="#" class="logo">VÉLO</a>
     <p class="footer-center">Active Skin Veil · Est. 2025</p>
-    <p class="footer-right">© 2025 VÉLO. All rights reserved.</p>
+    <div>
+      <div class="footer-social">
+        <a href="https://instagram.com/getvelo" target="_blank" rel="noopener">Instagram</a>
+        <a href="https://tiktok.com/@getvelo" target="_blank" rel="noopener">TikTok</a>
+      </div>
+      <p class="footer-right">© 2025 VÉLO. All rights reserved.</p>
+    </div>
   </footer>
 
   <script>
-    // Nav scroll
+    // ── Page load reveal ──────────────────────────────────
+    document.documentElement.style.opacity = '0';
+    window.addEventListener('load', () => {
+      document.documentElement.style.transition = 'opacity 0.6s ease';
+      document.documentElement.style.opacity = '1';
+    });
+
+    // ── Nav scroll ────────────────────────────────────────
     const nav = document.getElementById('nav');
     window.addEventListener('scroll', () => {
       nav.classList.toggle('solid', window.scrollY > 60);
-    });
+    }, { passive: true });
 
-    // Scroll animations
+    // ── Cursor parallax on hero orb ───────────────────────
+    const heroVisual = document.querySelector('.hero-visual');
+    const orbInner   = document.querySelector('.product-orb-inner');
+    if (heroVisual && orbInner) {
+      document.addEventListener('mousemove', (e) => {
+        const rect = heroVisual.getBoundingClientRect();
+        if (e.clientY < rect.bottom && e.clientY > rect.top) {
+          const cx = rect.left + rect.width / 2;
+          const cy = rect.top  + rect.height / 2;
+          const dx = (e.clientX - cx) / rect.width;
+          const dy = (e.clientY - cy) / rect.height;
+          heroVisual.style.transform = `translate(${dx * 14}px, ${dy * 10}px)`;
+        }
+      }, { passive: true });
+      heroVisual.addEventListener('mouseleave', () => {
+        heroVisual.style.transition = 'transform 1s ease';
+        heroVisual.style.transform = 'translate(0,0)';
+      });
+      heroVisual.addEventListener('mouseenter', () => {
+        heroVisual.style.transition = 'transform 0.1s linear';
+      });
+    }
+
+    // ── Scroll fade-in ────────────────────────────────────
     const observer = new IntersectionObserver((entries) => {
       entries.forEach((e, i) => {
         if (e.isIntersecting) {
-          setTimeout(() => e.target.classList.add('visible'), i * 120);
+          setTimeout(() => e.target.classList.add('visible'), i * 100);
+          observer.unobserve(e.target);
         }
       });
     }, { threshold: 0.12 });
     document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-    // Netlify form success
+    // ── Netlify form success ───────────────────────────────
     const params = new URLSearchParams(window.location.search);
     if (params.get('submitted') === 'true') {
       document.querySelectorAll('.waitlist-form').forEach(f => f.style.display = 'none');

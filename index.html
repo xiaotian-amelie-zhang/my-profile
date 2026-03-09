@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VÈLO — Active Skin Veil</title>
+  <meta name="description" content="Sweat-proof mineral SPF50. Universal skin-perfecting tint. A signature scent. Your skin, but better." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --sand:    #f5f0e8;
+      --linen:   #ede7d9;
+      --stone:   #c8bfb0;
+      --olive:   #4a4a3a;
+      --ink:     #1e1e18;
+      --gold:    #b89a6a;
+      --white:   #fdfcfa;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--sand);
+      color: var(--ink);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      font-size: 15px;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 24px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: transparent;
+      transition: background 0.3s;
+    }
+    nav.scrolled { background: rgba(245,240,232,0.92); backdrop-filter: blur(8px); }
+
+    .logo {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 0.18em;
+      color: var(--ink);
+      text-decoration: none;
+    }
+
+    .nav-cta {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--ink);
+      text-decoration: none;
+      border-bottom: 1px solid var(--ink);
+      padding-bottom: 2px;
+      transition: opacity 0.2s;
+    }
+    .nav-cta:hover { opacity: 0.5; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 120px 32px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 60% at 50% 40%, rgba(184,154,106,0.10) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 28px;
+    }
+
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(52px, 9vw, 100px);
+      font-weight: 300;
+      line-height: 1.0;
+      letter-spacing: 0.04em;
+      color: var(--ink);
+      margin-bottom: 8px;
+    }
+
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold);
+    }
+
+    .hero-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(18px, 2.5vw, 24px);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--olive);
+      margin-top: 16px;
+      margin-bottom: 48px;
+      max-width: 480px;
+    }
+
+    /* ── FORM ── */
+    .waitlist-form {
+      display: flex;
+      gap: 0;
+      max-width: 420px;
+      width: 100%;
+      margin: 0 auto;
+      border: 1px solid var(--stone);
+      background: var(--white);
+    }
+
+    .waitlist-form input[type="email"] {
+      flex: 1;
+      padding: 14px 20px;
+      border: none;
+      background: transparent;
+      font-family: 'Inter', sans-serif;
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--ink);
+      outline: none;
+    }
+    .waitlist-form input::placeholder { color: var(--stone); }
+
+    .waitlist-form button {
+      padding: 14px 24px;
+      background: var(--ink);
+      color: var(--sand);
+      border: none;
+      font-family: 'Inter', sans-serif;
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+      white-space: nowrap;
+    }
+    .waitlist-form button:hover { background: var(--gold); }
+
+    .form-note {
+      margin-top: 14px;
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: var(--stone);
+    }
+
+    .success-msg {
+      display: none;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 18px;
+      font-style: italic;
+      color: var(--gold);
+      margin-top: 16px;
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      width: 1px;
+      height: 80px;
+      background: var(--stone);
+      margin: 0 auto;
+    }
+
+    /* ── PILLARS ── */
+    .pillars {
+      padding: 100px 48px;
+      background: var(--linen);
+    }
+
+    .pillars-inner {
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 10px;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--gold);
+      text-align: center;
+      margin-bottom: 56px;
+    }
+
+    .pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 48px;
+    }
+
+    .pillar {
+      text-align: center;
+    }
+
+    .pillar-number {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 48px;
+      font-weight: 300;
+      color: var(--stone);
+      line-height: 1;
+      margin-bottom: 16px;
+    }
+
+    .pillar h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px;
+      font-weight: 400;
+      letter-spacing: 0.06em;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .pillar p {
+      font-size: 13px;
+      font-weight: 300;
+      color: var(--olive);
+      line-height: 1.8;
+    }
+
+    /* ── MANIFESTO ── */
+    .manifesto {
+      padding: 120px 32px;
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .manifesto blockquote {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(24px, 4vw, 38px);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.5;
+      color: var(--ink);
+    }
+
+    .manifesto cite {
+      display: block;
+      margin-top: 28px;
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-style: normal;
+      color: var(--stone);
+    }
+
+    /* ── SECOND WAITLIST ── */
+    .second-cta {
+      background: var(--ink);
+      padding: 100px 32px;
+      text-align: center;
+    }
+
+    .second-cta h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(32px, 5vw, 52px);
+      font-weight: 300;
+      color: var(--sand);
+      letter-spacing: 0.04em;
+      margin-bottom: 12px;
+    }
+
+    .second-cta p {
+      font-size: 13px;
+      color: var(--stone);
+      margin-bottom: 40px;
+    }
+
+    .second-cta .waitlist-form {
+      border-color: rgba(200,191,176,0.3);
+      background: transparent;
+    }
+    .second-cta .waitlist-form input[type="email"] {
+      color: var(--sand);
+    }
+    .second-cta .waitlist-form input::placeholder { color: rgba(200,191,176,0.5); }
+    .second-cta .waitlist-form button {
+      background: var(--gold);
+      color: var(--ink);
+    }
+    .second-cta .waitlist-form button:hover { background: var(--sand); }
+    .second-cta .form-note { color: rgba(200,191,176,0.5); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--ink);
+      border-top: 1px solid rgba(200,191,176,0.1);
+      padding: 32px 48px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer .logo { color: var(--stone); font-size: 18px; }
+
+    footer p {
+      font-size: 11px;
+      letter-spacing: 0.05em;
+      color: rgba(200,191,176,0.4);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { padding: 20px 24px; }
+
+      .pillars { padding: 72px 24px; }
+      .pillars-grid { grid-template-columns: 1fr; gap: 48px; }
+
+      footer { flex-direction: column; gap: 12px; text-align: center; }
+
+      .waitlist-form { flex-direction: column; }
+      .waitlist-form button { padding: 14px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav id="nav">
+    <a href="#" class="logo">VÈLO</a>
+    <a href="#waitlist" class="nav-cta">Join Waitlist</a>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <p class="hero-eyebrow">Active Skin Veil · Launching 2025</p>
+    <h1>Your skin,<br /><em>protected.</em></h1>
+    <p class="hero-sub">Sweat-proof mineral SPF50 with a universal skin-perfecting tint and a scent that stays with you.</p>
+
+    <form class="waitlist-form" id="waitlist" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="email" name="email" placeholder="your@email.com" required />
+      <button type="submit">Notify Me</button>
+    </form>
+    <p class="form-note">First access. No spam. Ever.</p>
+    <p class="success-msg" id="success-hero">You're on the list. We'll be in touch.</p>
+  </section>
+
+  <div class="divider"></div>
+
+  <!-- PILLARS -->
+  <section class="pillars">
+    <div class="pillars-inner">
+      <p class="section-label">What VÈLO does</p>
+      <div class="pillars-grid">
+
+        <div class="pillar">
+          <div class="pillar-number">01</div>
+          <h3>Shield</h3>
+          <p>Zinc-based mineral SPF50 that doesn't budge through sweat, heat, or effort. Built for the 6am run and the 6pm rooftop.</p>
+        </div>
+
+        <div class="pillar">
+          <div class="pillar-number">02</div>
+          <h3>Veil</h3>
+          <p>A universal skin-adaptive tint that evens, blurs, and illuminates. Not makeup. Not bare skin. Something better.</p>
+        </div>
+
+        <div class="pillar">
+          <div class="pillar-number">03</div>
+          <h3>Scent</h3>
+          <p>A signature clean fragrance — not sunscreen, not perfume. The smell of discipline, effort, and showing up.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- MANIFESTO -->
+  <section class="manifesto">
+    <blockquote>
+      "We made it for the woman who trains hard, lives well, and refuses to choose between protection and looking like herself."
+    </blockquote>
+    <cite>— The VÈLO Founders</cite>
+  </section>
+
+  <!-- SECOND CTA -->
+  <section class="second-cta">
+    <h2>Be first.</h2>
+    <p>Limited first batch. Waitlist members get early access and founder pricing.</p>
+
+    <form class="waitlist-form" id="waitlist-2" action="https://formspree.io/f/YOUR_FORM_ID" method="POST">
+      <input type="email" name="email" placeholder="your@email.com" required />
+      <button type="submit">Join Waitlist</button>
+    </form>
+    <p class="form-note">No spam. Unsubscribe anytime.</p>
+    <p class="success-msg" id="success-footer">You're on the list. We'll be in touch.</p>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <a href="#" class="logo">VÈLO</a>
+    <p>© 2025 VÈLO. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Nav scroll effect
+    const nav = document.getElementById('nav');
+    window.addEventListener('scroll', () => {
+      nav.classList.toggle('scrolled', window.scrollY > 40);
+    });
+
+    // Form submissions
+    function handleForm(formId, successId) {
+      const form = document.getElementById(formId);
+      if (!form) return;
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const data = new FormData(form);
+        try {
+          const res = await fetch(form.action, {
+            method: 'POST',
+            body: data,
+            headers: { 'Accept': 'application/json' }
+          });
+          if (res.ok) {
+            form.style.display = 'none';
+            document.getElementById(successId).style.display = 'block';
+          }
+        } catch {
+          // fallback: still show success to not block UX
+          form.style.display = 'none';
+          document.getElementById(successId).style.display = 'block';
+        }
+      });
+    }
+
+    handleForm('waitlist', 'success-hero');
+    handleForm('waitlist-2', 'success-footer');
+  </script>
+
+</body>
+</html>

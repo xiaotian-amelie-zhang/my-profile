@@ -1,14 +1,41 @@
 [build]
   publish = "."
 
-[[redirects]]
-  from = "/success"
-  to = "/?submitted=true"
-  status = 200
-
+# ── Security & performance headers ────────────────────────────────────────────
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "DENY"
-    X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
+    X-Frame-Options             = "DENY"
+    X-Content-Type-Options      = "nosniff"
+    Referrer-Policy             = "strict-origin-when-cross-origin"
+    Permissions-Policy          = "camera=(), microphone=(), geolocation=()"
+    Strict-Transport-Security   = "max-age=63072000; includeSubDomains; preload"
+    Content-Security-Policy     = "default-src 'self'; style-src 'self' 'unsafe-inline' fonts.googleapis.com; font-src fonts.gstatic.com; script-src 'self' 'unsafe-inline' plausible.io; connect-src plausible.io; img-src 'self' data: https:;"
+
+[[headers]]
+  for = "/og-image.*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800, immutable"
+
+[[headers]]
+  for = "/*.html"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"
+
+[[headers]]
+  for = "/sitemap.xml"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"
+
+# ── Form success redirect ──────────────────────────────────────────────────────
+[[redirects]]
+  from   = "/success"
+  to     = "/?submitted=true"
+  status = 302
+
+# ── www → apex ────────────────────────────────────────────────────────────────
+[[redirects]]
+  from   = "https://www.getvelo.com/*"
+  to     = "https://getvelo.com/:splat"
+  status = 301
+  force  = true

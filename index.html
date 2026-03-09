@@ -38,6 +38,46 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+
+  <!-- Structured data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "name": "VÉLO",
+        "url": "https://getvelo.com",
+        "description": "Active Skin Veil — sweat-proof mineral SPF50 mist with universal adaptive tint and signature scent, built for women who move.",
+        "foundingDate": "2025",
+        "sameAs": [
+          "https://instagram.com/getvelo",
+          "https://tiktok.com/@getvelo"
+        ]
+      },
+      {
+        "@type": "Product",
+        "name": "VÉLO Active Skin Veil",
+        "description": "Sweat-proof mineral SPF50 mist with a universal skin-perfecting tint and a signature clean scent. Zinc oxide. Reef-safe. Built for women who move.",
+        "brand": { "@type": "Brand", "name": "VÉLO" },
+        "category": "Skincare / Sun Protection",
+        "audience": { "@type": "Audience", "audienceType": "Women, active lifestyle" },
+        "offers": {
+          "@type": "Offer",
+          "availability": "https://schema.org/PreOrder",
+          "priceCurrency": "USD",
+          "url": "https://getvelo.com/#waitlist"
+        },
+        "additionalProperty": [
+          { "@type": "PropertyValue", "name": "SPF",             "value": "50" },
+          { "@type": "PropertyValue", "name": "Active Ingredient","value": "Non-Nano Zinc Oxide" },
+          { "@type": "PropertyValue", "name": "Format",          "value": "Mist" },
+          { "@type": "PropertyValue", "name": "Tint",            "value": "Universal Adaptive" }
+        ]
+      }
+    ]
+  }
+  </script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -745,6 +785,67 @@
     }
     .footer-social a:hover { color: var(--gold); opacity: 1; }
 
+    /* ─── INGREDIENTS ─── */
+    .ingredients {
+      padding: 120px 72px;
+      background: var(--cream);
+      border-top: 1px solid rgba(197,185,167,0.2);
+    }
+    .ingredients-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-bottom: 64px;
+    }
+    .ingredients-header h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px, 4vw, 58px);
+      font-weight: 200;
+      color: var(--ink);
+      line-height: 1.05;
+      margin-top: 16px;
+    }
+    .ingredients-header h2 em { font-style: italic; color: var(--gold); }
+    .ingredients-header aside {
+      font-size: 13px;
+      color: var(--stone);
+      max-width: 240px;
+      line-height: 1.85;
+      text-align: right;
+    }
+    .ingredients-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid rgba(197,185,167,0.4);
+    }
+    .ingredient {
+      padding: 40px 40px 40px 0;
+      border-right: 1px solid rgba(197,185,167,0.4);
+    }
+    .ingredient:first-child { padding-left: 0; }
+    .ingredient + .ingredient { padding-left: 40px; }
+    .ingredient:last-child { border-right: none; padding-right: 0; }
+    .ingredient-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px;
+      font-weight: 200;
+      color: var(--ink);
+      line-height: 1.15;
+      margin-bottom: 10px;
+    }
+    .ingredient-role {
+      font-size: 9px;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 18px;
+    }
+    .ingredient p {
+      font-size: 13px;
+      color: var(--olive);
+      line-height: 1.85;
+    }
+
     /* ─── SCROLL ANIMATIONS ─── */
     .fade-up {
       opacity: 0;
@@ -784,6 +885,22 @@
       footer { grid-template-columns: 1fr; gap: 16px; padding: 40px 28px; text-align: center; }
       footer .logo { text-align: center; }
       .footer-right { text-align: center; }
+      .footer-social { justify-content: center; }
+
+      .ingredients { padding: 72px 28px; }
+      .ingredients-header { flex-direction: column; align-items: flex-start; gap: 16px; }
+      .ingredients-header aside { text-align: left; max-width: none; }
+      .ingredients-grid { grid-template-columns: 1fr 1fr; }
+      .ingredient { padding: 32px 20px 32px 0; border-right: none; }
+      .ingredient + .ingredient { padding-left: 0; }
+      .ingredient:nth-child(odd)  { padding-right: 20px; border-right: 1px solid rgba(197,185,167,0.4); }
+      .ingredient:nth-child(even) { padding-left: 20px; }
+      .ingredient:nth-child(1),
+      .ingredient:nth-child(2)    { border-bottom: 1px solid rgba(197,185,167,0.4); }
+
+      .hero { grid-template-rows: auto auto; }
+      .hero-text { order: 1; padding-top: 100px; }
+      .hero-visual { order: 2; height: 60vw; min-height: 280px; }
     }
   </style>
 </head>
@@ -945,6 +1062,39 @@
       <span>·</span>
     </div>
   </div>
+
+  <!-- INGREDIENTS -->
+  <section class="ingredients">
+    <div class="ingredients-header fade-up">
+      <div>
+        <p class="section-tag">Transparency</p>
+        <h2>Nothing hidden.<br /><em>Nothing extra.</em></h2>
+      </div>
+      <aside>Four hero ingredients. No fillers, no proprietary blends, no fine print. Every element earns its place.</aside>
+    </div>
+    <div class="ingredients-grid">
+      <div class="ingredient fade-up">
+        <div class="ingredient-name">Non-Nano<br />Zinc Oxide</div>
+        <div class="ingredient-role">SPF50 · Broad Spectrum · Reef-Safe</div>
+        <p>Physical UV filter that sits on top of skin — not absorbed into it. Reef-safe. Doesn't sting eyes. Stays put through sweat, heat, and effort.</p>
+      </div>
+      <div class="ingredient fade-up">
+        <div class="ingredient-name">Universal<br />Iron Oxides</div>
+        <div class="ingredient-role">Adaptive Tint · All Skin Tones</div>
+        <p>Skin-blurring pigments calibrated to shift with your undertone. No white cast. No orange. Just your skin — perfected and even.</p>
+      </div>
+      <div class="ingredient fade-up">
+        <div class="ingredient-name">White Musk<br />+ Bergamot</div>
+        <div class="ingredient-role">Signature Scent · Clean Fragrance</div>
+        <p>Bright bergamot opens. Soft white musk lingers. Cedar closes. Not sunscreen. Not perfume. Something entirely its own.</p>
+      </div>
+      <div class="ingredient fade-up">
+        <div class="ingredient-name">Hyaluronic<br />Acid</div>
+        <div class="ingredient-role">Hydration · Barrier Support</div>
+        <p>Pulls moisture in and holds it there — so your skin stays comfortable and supple from the 6am run to the 10pm dinner.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- PILLARS -->
   <section class="pillars" id="story">

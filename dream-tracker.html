@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Amelie's Dream Tracker</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #F8F6F2;
+      --card:        #FFFFFF;
+      --gold:        #C9A96E;
+      --gold-light:  #F3EBD8;
+      --brown:       #6B5B45;
+      --text:        #2A2116;
+      --muted:       #9B9085;
+      --sage:        #7A9E8E;
+      --sage-light:  #E4EFE9;
+      --border:      #EDE9E2;
+      --shadow:      rgba(42, 33, 22, 0.07);
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      line-height: 1.65;
+      min-height: 100vh;
+    }
+
+    /* ── Layout ── */
+    .app {
+      max-width: 680px;
+      margin: 0 auto;
+      padding: 48px 24px 80px;
+    }
+
+    /* ── Header ── */
+    .header { margin-bottom: 44px; }
+    .header-date {
+      font-size: 12px;
+      color: var(--muted);
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+    }
+    .header-greeting {
+      font-family: 'Playfair Display', serif;
+      font-size: 34px;
+      font-weight: 400;
+      line-height: 1.2;
+      color: var(--text);
+    }
+    .header-greeting em {
+      color: var(--gold);
+      font-style: italic;
+    }
+    .header-sub {
+      margin-top: 8px;
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--muted);
+    }
+
+    /* ── Progress card ── */
+    .progress-card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 24px 28px;
+      box-shadow: 0 2px 24px var(--shadow);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 22px;
+    }
+    .ring-wrap { position: relative; flex-shrink: 0; }
+    .ring-svg { display: block; transform: rotate(-90deg); }
+    .ring-track { fill: none; stroke: var(--border); stroke-width: 5; }
+    .ring-fill {
+      fill: none;
+      stroke: var(--gold);
+      stroke-width: 5;
+      stroke-linecap: round;
+      stroke-dasharray: 163;
+      stroke-dashoffset: 163;
+      transition: stroke-dashoffset 0.7s cubic-bezier(.4,0,.2,1);
+    }
+    .ring-inner {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+    .ring-pct { font-size: 17px; font-weight: 500; color: var(--text); line-height: 1; }
+    .ring-lbl { font-size: 9px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-top: 2px; }
+    .progress-info { flex: 1; min-width: 0; }
+    .progress-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 17px;
+      font-weight: 400;
+      margin-bottom: 3px;
+    }
+    .progress-sub { font-size: 13px; color: var(--muted); }
+    .streak-pill {
+      flex-shrink: 0;
+      background: var(--gold-light);
+      border-radius: 14px;
+      padding: 14px 18px;
+      text-align: center;
+    }
+    .streak-num { font-size: 24px; font-weight: 500; color: var(--brown); line-height: 1; }
+    .streak-lbl { font-size: 10px; color: var(--brown); opacity: 0.65; margin-top: 3px; letter-spacing: 0.04em; }
+
+    /* ── Quote card ── */
+    .quote-card {
+      background: linear-gradient(135deg, #2A2116 0%, #49361F 100%);
+      border-radius: 18px;
+      padding: 28px 32px;
+      margin-bottom: 16px;
+      color: white;
+    }
+    .quote-eyebrow {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      opacity: 0.45;
+      margin-bottom: 10px;
+    }
+    .quote-text {
+      font-family: 'Playfair Display', serif;
+      font-size: 18px;
+      font-style: italic;
+      line-height: 1.55;
+      margin-bottom: 12px;
+      opacity: 0.95;
+    }
+    .quote-author { font-size: 12px; opacity: 0.4; }
+
+    /* ── Section label ── */
+    .section-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin: 36px 0 10px;
+    }
+
+    /* ── Generic card ── */
+    .card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 26px 28px;
+      box-shadow: 0 2px 24px var(--shadow);
+      margin-bottom: 16px;
+    }
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 18px;
+    }
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    .card-meta {
+      font-size: 12px;
+      color: var(--muted);
+      background: var(--bg);
+      padding: 4px 10px;
+      border-radius: 20px;
+    }
+
+    /* ── Habits ── */
+    .habit-list { list-style: none; }
+    .habit-row {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      padding: 9px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+      user-select: none;
+      transition: opacity 0.18s;
+    }
+    .habit-row:last-child { border-bottom: none; }
+    .habit-row.done { opacity: 0.45; }
+    .habit-row.done .habit-text { text-decoration: line-through; }
+    .habit-cb {
+      width: 22px; height: 22px;
+      border-radius: 50%;
+      border: 1.8px solid var(--border);
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.18s, border-color 0.18s;
+      background: white;
+    }
+    .habit-row.done .habit-cb { background: var(--sage); border-color: var(--sage); }
+    .habit-cb svg { display: none; }
+    .habit-row.done .habit-cb svg { display: block; }
+    .habit-text { flex: 1; font-size: 14px; }
+    .habit-tag {
+      font-size: 10px;
+      color: var(--muted);
+      background: var(--bg);
+      padding: 2px 8px;
+      border-radius: 10px;
+      white-space: nowrap;
+    }
+
+    /* ── Actions ── */
+    .action-row {
+      display: flex;
+      gap: 14px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .action-row:last-child { border-bottom: none; }
+    .action-n { font-size: 12px; font-weight: 500; color: var(--gold); flex-shrink: 0; padding-top: 2px; width: 22px; }
+    .action-body { flex: 1; min-width: 0; }
+    .action-title { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+    .action-detail { font-size: 12px; color: var(--muted); }
+    .action-del {
+      flex-shrink: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--border);
+      font-size: 16px;
+      line-height: 1;
+      padding: 0 4px;
+      transition: color 0.15s;
+      align-self: flex-start;
+      margin-top: 2px;
+    }
+    .action-del:hover { color: #e08080; }
+
+    /* ── Milestones ── */
+    .milestone-row {
+      display: flex;
+      gap: 16px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: flex-start;
+    }
+    .milestone-row:last-child { border-bottom: none; }
+    .m-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      background: var(--border);
+      flex-shrink: 0;
+      margin-top: 5px;
+    }
+    .m-dot.done   { background: var(--sage); }
+    .m-dot.active { background: var(--gold); }
+    .m-info { flex: 1; }
+    .m-title { font-size: 14px; font-weight: 500; margin-bottom: 3px; }
+    .m-desc { font-size: 12px; color: var(--muted); }
+    .m-badge {
+      font-size: 11px;
+      padding: 3px 10px;
+      border-radius: 10px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .m-done     { background: var(--sage-light); color: var(--sage); }
+    .m-active   { background: var(--gold-light); color: var(--brown); }
+    .m-upcoming { background: var(--bg);         color: var(--muted); }
+
+    /* ── Add form ── */
+    .add-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      padding-top: 14px;
+      border-top: 1px solid var(--border);
+    }
+    .add-input {
+      flex: 1;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 9px 14px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      color: var(--text);
+      background: var(--bg);
+      outline: none;
+      transition: border-color 0.18s;
+    }
+    .add-input:focus { border-color: var(--gold); }
+    .add-input::placeholder { color: var(--muted); opacity: 0.7; }
+    .add-btn {
+      background: var(--gold);
+      color: white;
+      border: none;
+      border-radius: 10px;
+      padding: 9px 18px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 13px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: opacity 0.18s;
+      white-space: nowrap;
+    }
+    .add-btn:hover { opacity: 0.82; }
+
+    /* ── Responsive ── */
+    @media (max-width: 480px) {
+      .app { padding: 28px 16px 60px; }
+      .header-greeting { font-size: 28px; }
+      .progress-card { flex-wrap: wrap; gap: 16px; }
+      .streak-pill { margin-left: 0; }
+      .quote-card { padding: 22px 24px; }
+    }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ── Header ─────────────────────────────── -->
+  <header class="header">
+    <div class="header-date" id="headerDate"></div>
+    <h1 class="header-greeting">Good morning, <em>Amelie.</em></h1>
+    <p class="header-sub">Your path to entrepreneurship — one focused day at a time.</p>
+  </header>
+
+  <!-- ── Progress card ──────────────────────── -->
+  <div class="progress-card">
+    <div class="ring-wrap">
+      <svg class="ring-svg" width="66" height="66" viewBox="0 0 66 66">
+        <circle class="ring-track" cx="33" cy="33" r="26"/>
+        <circle class="ring-fill" id="ringFill" cx="33" cy="33" r="26"/>
+      </svg>
+      <div class="ring-inner">
+        <span class="ring-pct" id="ringPct">0%</span>
+        <span class="ring-lbl">today</span>
+      </div>
+    </div>
+    <div class="progress-info">
+      <div class="progress-title" id="progressTitle">Start your day</div>
+      <div class="progress-sub"  id="progressSub">Check off your habits to build momentum.</div>
+    </div>
+    <div class="streak-pill">
+      <div class="streak-num" id="streakNum">0</div>
+      <div class="streak-lbl">day streak</div>
+    </div>
+  </div>
+
+  <!-- ── Daily quote ────────────────────────── -->
+  <div class="quote-card">
+    <div class="quote-eyebrow">Today's Fuel</div>
+    <div class="quote-text"   id="quoteText"></div>
+    <div class="quote-author" id="quoteAuthor"></div>
+  </div>
+
+  <!-- ── Daily habits ───────────────────────── -->
+  <div class="section-label">Daily Habits</div>
+  <div class="card">
+    <div class="card-head">
+      <span class="card-title">Today's Non-Negotiables</span>
+      <span class="card-meta" id="habitMeta">0 / 0 done</span>
+    </div>
+    <ul class="habit-list" id="habitList"></ul>
+    <div class="add-row">
+      <input class="add-input" id="habitInput" type="text" placeholder="Add a new habit…">
+      <button class="add-btn" onclick="addHabit()">Add</button>
+    </div>
+  </div>
+
+  <!-- ── Weekly actions ─────────────────────── -->
+  <div class="section-label">This Week's Big Moves</div>
+  <div class="card">
+    <div class="card-head">
+      <span class="card-title">Priority Actions</span>
+      <span class="card-meta">Week of <span id="weekOf"></span></span>
+    </div>
+    <div id="actionList"></div>
+    <div class="add-row">
+      <input class="add-input" id="actionInput" type="text" placeholder="Add an action item…">
+      <button class="add-btn" onclick="addAction()">Add</button>
+    </div>
+  </div>
+
+  <!-- ── Milestones ─────────────────────────── -->
+  <div class="section-label">The Journey</div>
+  <div class="card">
+    <div class="card-head">
+      <span class="card-title">Entrepreneur Milestones</span>
+    </div>
+    <div id="milestoneList"></div>
+  </div>
+
+</div>
+
+<script>
+// ── Quotes ────────────────────────────────────────────────────────────────────
+const QUOTES = [
+  { q: "The secret of getting ahead is getting started.", a: "Mark Twain" },
+  { q: "Done is better than perfect.", a: "Sheryl Sandberg" },
+  { q: "You don't have to be great to start, but you have to start to be great.", a: "Zig Ziglar" },
+  { q: "Your most unhappy customers are your greatest source of learning.", a: "Bill Gates" },
+  { q: "The way to get started is to quit talking and begin doing.", a: "Walt Disney" },
+  { q: "Risk more than others think is safe. Dream more than others think is practical.", a: "Howard Schultz" },
+  { q: "The best time to plant a tree was 20 years ago. The second best time is now.", a: "Chinese Proverb" },
+  { q: "Entrepreneurship is living a few years like most won't, so you can spend the rest like most can't.", a: "Unknown" },
+  { q: "Chase the vision, not the money — the money will end up following you.", a: "Tony Hsieh" },
+  { q: "The biggest risk is not taking any risk.", a: "Mark Zuckerberg" },
+  { q: "Build something you are proud of, even if no one sees it yet.", a: "Unknown" },
+  { q: "Every expert was once a beginner. Start now.", a: "Helen Hayes" },
+];
+
+// ── Default data ──────────────────────────────────────────────────────────────
+const DEFAULT_HABITS = [
+  { id: 1, text: "Read one business article or book chapter",     tag: "Learn",   done: false },
+  { id: 2, text: "Reach out to one person in my network",         tag: "Network", done: false },
+  { id: 3, text: "Work on my project or idea for 30 min",         tag: "Build",   done: false },
+  { id: 4, text: "Journal — 3 wins + 1 lesson from yesterday",    tag: "Reflect", done: false },
+  { id: 5, text: "Review my 90-day goals and adjust if needed",   tag: "Focus",   done: false },
+  { id: 6, text: "Move my body — walk, run or stretch",           tag: "Energy",  done: false },
+];
+
+const DEFAULT_ACTIONS = [
+  { id: 1, text: "Research 3 potential mentors to reach out to",      detail: "LinkedIn + HEC alumni network" },
+  { id: 2, text: "Write a one-page business idea summary",            detail: "Problem · solution · market · why me" },
+  { id: 3, text: "Schedule a coffee chat with an entrepreneur",       detail: "Ask about their first year challenges" },
+];
+
+const DEFAULT_MILESTONES = [
+  { id: 1, title: "Define my entrepreneurial vision",   desc: "What problem do I want to solve, and why me?",                        status: "done"     },
+  { id: 2, title: "Validate one business idea",         desc: "Talk to 10 potential users — listen more than you pitch",             status: "active"   },
+  { id: 3, title: "Build a minimum viable product",     desc: "Simplest version that solves the core problem",                      status: "upcoming" },
+  { id: 4, title: "Get my first paying customer",       desc: "Even one euro validates that value exists",                          status: "upcoming" },
+  { id: 5, title: "Hit €1k monthly revenue",            desc: "Real traction — proof the business can work",                       status: "upcoming" },
+  { id: 6, title: "Launch publicly",                    desc: "Share with the world — Product Hunt, press, your network",          status: "upcoming" },
+  { id: 7, title: "Build a team",                       desc: "Find co-founders or first hires who believe in the mission",        status: "upcoming" },
+  { id: 8, title: "Reach product-market fit",           desc: "Users can't imagine life without what you've built",                status: "upcoming" },
+];
+
+// ── Storage helpers ───────────────────────────────────────────────────────────
+const KEY = 'amelie_dream_tracker_v2';
+
+function todayStr() {
+  return new Date().toISOString().split('T')[0];
+}
+
+function loadState() {
+  const raw = localStorage.getItem(KEY);
+  const s = raw ? JSON.parse(raw) : {};
+  if (!s.habits)       s.habits    = JSON.parse(JSON.stringify(DEFAULT_HABITS));
+  if (!s.actions)      s.actions   = JSON.parse(JSON.stringify(DEFAULT_ACTIONS));
+  if (!s.milestones)   s.milestones = JSON.parse(JSON.stringify(DEFAULT_MILESTONES));
+  if (!s.streak)       s.streak    = { count: 0, lastFull: null };
+  if (!s.lastReset)    s.lastReset = null;
+
+  // Daily reset
+  const today = todayStr();
+  if (s.lastReset !== today) {
+    // Was yesterday a full completion? Update streak.
+    if (s.lastReset) {
+      const wasYesterday = (() => {
+        const d = new Date(today);
+        d.setDate(d.getDate() - 1);
+        return d.toISOString().split('T')[0] === s.lastReset;
+      })();
+      const wasFull = s.habits.every(h => h.done);
+      if (wasFull) {
+        s.streak.count = wasYesterday ? s.streak.count + 1 : 1;
+        s.streak.lastFull = s.lastReset;
+      } else {
+        s.streak.count = 0;
+      }
+    }
+    s.habits.forEach(h => h.done = false);
+    s.lastReset = today;
+  }
+  return s;
+}
+
+function save(s) { localStorage.setItem(KEY, JSON.stringify(s)); }
+
+// ── Render helpers ────────────────────────────────────────────────────────────
+function checkSVG() {
+  return `<svg width="10" height="8" viewBox="0 0 10 8" fill="none">
+    <path d="M1 4L3.5 6.5L9 1" stroke="white" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+  </svg>`;
+}
+
+function renderHeader() {
+  const d = new Date();
+  document.getElementById('headerDate').textContent =
+    d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  const mon = new Date(d);
+  const day = mon.getDay();
+  mon.setDate(mon.getDate() - (day === 0 ? 6 : day - 1));
+  document.getElementById('weekOf').textContent =
+    mon.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+}
+
+function renderQuote() {
+  const idx = new Date().getDate() % QUOTES.length;
+  const q = QUOTES[idx];
+  document.getElementById('quoteText').textContent   = `"${q.q}"`;
+  document.getElementById('quoteAuthor').textContent = `— ${q.a}`;
+}
+
+function renderHabits(s) {
+  const done  = s.habits.filter(h => h.done).length;
+  const total = s.habits.length;
+  const pct   = total ? Math.round((done / total) * 100) : 0;
+
+  // Count badge
+  document.getElementById('habitMeta').textContent = `${done} / ${total} done`;
+
+  // List
+  document.getElementById('habitList').innerHTML = s.habits.map((h, i) => `
+    <li class="habit-row ${h.done ? 'done' : ''}" onclick="toggleHabit(${i})">
+      <div class="habit-cb">${checkSVG()}</div>
+      <span class="habit-text">${esc(h.text)}</span>
+      <span class="habit-tag">${esc(h.tag)}</span>
+    </li>
+  `).join('');
+
+  // Ring
+  const circumference = 163;
+  document.getElementById('ringFill').style.strokeDashoffset =
+    circumference - (pct / 100) * circumference;
+  document.getElementById('ringPct').textContent = pct + '%';
+
+  // Message
+  const msgs = [
+    ["Start your day",    "Check off your habits to build momentum."],
+    ["You've begun",      "Keep the energy going — one habit at a time."],
+    ["Halfway there",     "Over halfway — you're doing great, Amelie."],
+    ["Almost done",       "Just a few more — finish strong."],
+    ["Day complete!",     "You've crushed it today. The streak lives on."],
+  ];
+  const idx = done === 0 ? 0 : done === total ? 4
+            : pct <= 25 ? 1 : pct <= 55 ? 2 : 3;
+  document.getElementById('progressTitle').textContent = msgs[idx][0];
+  document.getElementById('progressSub').textContent   = msgs[idx][1];
+
+  // Streak
+  document.getElementById('streakNum').textContent = s.streak.count;
+}
+
+function renderActions(s) {
+  document.getElementById('actionList').innerHTML = s.actions.map((a, i) => `
+    <div class="action-row">
+      <div class="action-n">${String(i + 1).padStart(2, '0')}</div>
+      <div class="action-body">
+        <div class="action-title">${esc(a.text)}</div>
+        ${a.detail ? `<div class="action-detail">${esc(a.detail)}</div>` : ''}
+      </div>
+      <button class="action-del" onclick="deleteAction(${i})" title="Remove">×</button>
+    </div>
+  `).join('');
+}
+
+function renderMilestones(s) {
+  document.getElementById('milestoneList').innerHTML = s.milestones.map(m => {
+    const dotCls   = m.status === 'done' ? 'done' : m.status === 'active' ? 'active' : '';
+    const badgeCls = m.status === 'done' ? 'm-done' : m.status === 'active' ? 'm-active' : 'm-upcoming';
+    const label    = m.status === 'done' ? 'Completed' : m.status === 'active' ? 'In progress' : 'Upcoming';
+    return `
+      <div class="milestone-row">
+        <div class="m-dot ${dotCls}"></div>
+        <div class="m-info">
+          <div class="m-title">${esc(m.title)}</div>
+          <div class="m-desc">${esc(m.desc)}</div>
+        </div>
+        <span class="m-badge ${badgeCls}">${label}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+function render() {
+  const s = loadState();
+  renderHeader();
+  renderQuote();
+  renderHabits(s);
+  renderActions(s);
+  renderMilestones(s);
+}
+
+// ── Actions ───────────────────────────────────────────────────────────────────
+function toggleHabit(i) {
+  const s = loadState();
+  s.habits[i].done = !s.habits[i].done;
+  // Streak: full completion
+  if (s.habits.every(h => h.done)) {
+    const today = todayStr();
+    if (s.streak.lastFull !== today) {
+      const yest = (() => {
+        const d = new Date(today); d.setDate(d.getDate() - 1);
+        return d.toISOString().split('T')[0];
+      })();
+      s.streak.count = s.streak.lastFull === yest ? s.streak.count + 1 : 1;
+      s.streak.lastFull = today;
+    }
+  }
+  save(s);
+  renderHabits(s);
+}
+
+function addHabit() {
+  const el = document.getElementById('habitInput');
+  const text = el.value.trim();
+  if (!text) return;
+  const s = loadState();
+  s.habits.push({ id: Date.now(), text, tag: 'Custom', done: false });
+  save(s); el.value = '';
+  renderHabits(s);
+}
+
+function addAction() {
+  const el = document.getElementById('actionInput');
+  const text = el.value.trim();
+  if (!text) return;
+  const s = loadState();
+  s.actions.push({ id: Date.now(), text, detail: '' });
+  save(s); el.value = '';
+  renderActions(s);
+}
+
+function deleteAction(i) {
+  const s = loadState();
+  s.actions.splice(i, 1);
+  save(s);
+  renderActions(s);
+}
+
+// ── Keyboard shortcuts ────────────────────────────────────────────────────────
+document.getElementById('habitInput') .addEventListener('keydown', e => e.key === 'Enter' && addHabit());
+document.getElementById('actionInput').addEventListener('keydown', e => e.key === 'Enter' && addAction());
+
+// ── XSS-safe escape ───────────────────────────────────────────────────────────
+function esc(str) {
+  return String(str)
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;')
+    .replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+render();
+</script>
+</body>
+</html>
